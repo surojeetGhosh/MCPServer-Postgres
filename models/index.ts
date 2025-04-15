@@ -1,4 +1,4 @@
-import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse';
+import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 
 // to support multiple simultaneous connections we have a lookup object from
 // sessionId to transport

@@ -1,4 +1,4 @@
-import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse";
+import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Request, Response } from "express";
 import { transports } from "../models/index.js";
