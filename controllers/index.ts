@@ -3,13 +3,14 @@ import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mc
 import { Request, Response } from "express";
 import { Database } from "../models";
 import { z } from "zod";
+import { ServerOptions } from "@modelcontextprotocol/sdk/server/index.js";
 
 const server = new McpServer({
     name: "postgres-server",
     version: "1.0.0"
 });
 
-server.tool("queryCustom",
+server.tool("query","Execute custom Postgres SQL query",
     { query: z.string() },
     async ({ query }) => ({
         content: [{ type: "text", text: await Database.PostgreSqlDatabase.executeQuery(query) }],
