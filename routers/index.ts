@@ -4,7 +4,7 @@ import { Utility } from "../controllers/index.js"
 const router = Router()
 
 router.get("/sse", Utility.getTools)
-router.post("/message", Utility.postMessage)
+router.post("/messages", Utility.postMessage)
 
 
 export default router

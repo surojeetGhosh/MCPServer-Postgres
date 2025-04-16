@@ -10,7 +10,8 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node build/index.js"
+        "start": "npx tsc && node build/index.js",
+        "inspect": "npx tsc && npx @modelcontextprotocol/inspector node build/index.js"
     },
     "author": "",
     "license": "ISC",
@@ -20,6 +21,8 @@
         "body-parser": "^2.2.0",
         "dotenv": "^16.5.0",
         "express": "^5.1.0",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "mcpserver": "file:",
+        "zod": "^3.24.2"
     }
 }

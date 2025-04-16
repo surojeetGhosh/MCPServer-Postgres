@@ -1,0 +1,2 @@
+First don't use body-parser as encoded one even SSETransport won't be able to recognize response and message.
+Second for sse import sse.js not simply sse as it will cause issue
