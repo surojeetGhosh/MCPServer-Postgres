@@ -3,7 +3,6 @@ import { Express } from "express";
 // import bodyParser from "body-parser";
 import router from "./routers";;
 
-
 const app: Express = express()
 const port = process.env.PORT || 3001
 

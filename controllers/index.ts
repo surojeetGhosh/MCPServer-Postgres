@@ -1,7 +1,7 @@
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Request, Response } from "express";
-import { transports } from "../models/index.js";
+import { Database } from "../models";
 import { z } from "zod";
 
 const server = new McpServer({
@@ -9,10 +9,10 @@ const server = new McpServer({
     version: "1.0.0"
 });
 
-server.tool("add",
-    { a: z.number(), b: z.number() },
-    async ({ a, b }) => ({
-        content: [{ type: "text", text: String(a + b) }]
+server.tool("query",
+    { query: z.string() },
+    async ({ query }) => ({
+        content: [{ type: "text", text: await Database.PostgreSqlDatabase.executeQuery(query) }],
     })
 );
 
@@ -30,9 +30,9 @@ server.resource(
 
 const getTools = async (req: Request, res: Response) => {
     const transport = new SSEServerTransport("/messages", res)
-    transports[transport.sessionId] = transport
+    Database.transports[transport.sessionId] = transport
     res.on("close", () => {
-        delete transports[transport.sessionId]
+        delete Database.transports[transport.sessionId]
         transport.close()
     })
     await server.connect(transport);
@@ -40,8 +40,7 @@ const getTools = async (req: Request, res: Response) => {
 
 const postMessage = async (req: Request, res: Response) => {
     const sessionId = req.query.sessionId as string;
-    const transport = transports[sessionId];
-    console.log("sessionId", sessionId, "Someone just called me")
+    const transport = Database.transports[sessionId];
     if (transport) {
         await transport.handlePostMessage(req, res);
     } else {
