@@ -9,22 +9,10 @@ const server = new McpServer({
     version: "1.0.0"
 });
 
-server.tool("query",
+server.tool("queryCustom",
     { query: z.string() },
     async ({ query }) => ({
         content: [{ type: "text", text: await Database.PostgreSqlDatabase.executeQuery(query) }],
-    })
-);
-
-// Add a dynamic greeting resource
-server.resource(
-    "greeting",
-    new ResourceTemplate("greeting://{name}", { list: undefined }),
-    async (uri, { name }) => ({
-        contents: [{
-            uri: uri.href,
-            text: `Hello, ${name}!`
-        }]
     })
 );
 
